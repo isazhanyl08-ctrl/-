@@ -11,59 +11,56 @@
             background: linear-gradient(180deg, #CEF4FC 0%, #C8E6C9 100%);
             font-family: 'Comic Sans MS', cursive, sans-serif; height: 100vh; overflow: hidden; touch-action: none;
         }
-        .header-info { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.7); z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .stat-box { font-size: 18px; font-weight: bold; color: #2C5F2D; }
+        .header-info { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.7); z-index: 100; }
+        .stat-box { font-size: 20px; font-weight: bold; color: #2C5F2D; }
         
         #fruit-storage { 
             display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; 
-            width: 100%; min-height: 150px; padding: 30px; z-index: 50; margin-top: 10px;
+            width: 100%; min-height: 150px; padding: 20px; z-index: 50; margin-top: 10px;
         }
-        .fruit { font-size: 65px; cursor: pointer; user-select: none; touch-action: none; display: inline-block; z-index: 200; filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.25)); transition: transform 0.1s; }
-        .fruit:active { transform: scale(1.1); }
+        .fruit { font-size: 70px; cursor: pointer; user-select: none; touch-action: none; display: inline-block; z-index: 200; filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.2)); }
 
         #basket-area { 
             display: flex; justify-content: center; align-items: flex-end;
-            gap: 15px; /* Жәшіктер арасы жақындады */
-            width: 95%; max-width: 600px; /* Телефонға сию үшін маңызды */
-            padding: 0 5px; margin-top: auto; margin-bottom: 60px;
+            width: 100%; padding: 0 10px; margin-top: auto; margin-bottom: 50px;
+            gap: 15px; /* Әдепкі бойынша жақын тұру */
         }
-        .basket-wrapper { display: flex; flex-direction: column; align-items: center; width: 32%; max-width: 180px; position: relative; }
+
+        /* НОУТБУК ПЕН КОМПЬЮТЕР ҮШІН АРНАЙЫ РЕТТЕУ */
+        @media (min-width: 768px) {
+            #basket-area { gap: 40px; } /* Ноутбукта жәшіктер арасы тым алшақ кетпеуі үшін */
+            .fruit { font-size: 90px; } /* Үлкен экранда жемістер ірі */
+            .stat-box { font-size: 28px; }
+        }
+
+        .basket-wrapper { display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 200px; position: relative; }
         
-        /* ЖӘШІК ДИЗАЙНЫ (ҮЛКЕЙТІЛДІ) */
         .crate {
-            width: 100%; height: 130px; /* Биіктігі үлкейді */
-            background-color: #D79956; border: 5px solid #A67038;
+            width: 100%; height: 140px; background-color: #D79956; border: 5px solid #A67038;
             border-radius: 12px; position: relative; display: flex; flex-wrap: wrap;
-            align-content: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+            align-content: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             z-index: 10;
         }
-        /* Орамал (Торлары үлкейді) */
-        .crate-cloth { position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; opacity: 0.8; border-radius: 7px; pointer-events: none; }
+        .crate-cloth { position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; opacity: 0.8; border-radius: 6px; pointer-events: none; }
         .red .crate-cloth { background: repeating-conic-gradient(#EF5350 0% 25%, #fff 0% 50%) 50% / 25px 25px; }
         .yellow .crate-cloth { background: repeating-conic-gradient(#FBC02D 0% 25%, #fff 0% 50%) 50% / 25px 25px; }
         .green .crate-cloth { background: repeating-conic-gradient(#66BB6A 0% 25%, #fff 0% 50%) 50% / 25px 25px; }
         
-        /* Шөп */
-        .grass {
-            position: absolute; bottom: -20px; width: 110%; height: 50px;
-            background: #4CAF50; border-radius: 50% 50% 0 0; z-index: -1;
-            filter: drop-shadow(0 -2px 2px rgba(0,0,0,0.1));
-        }
+        .grass { position: absolute; bottom: -20px; width: 115%; height: 50px; background: #4CAF50; border-radius: 50% 50% 0 0; z-index: -1; }
 
-        .basket-label { margin-top: 20px; padding: 7px 15px; border-radius: 20px; color: white; font-size: 16px; font-weight: bold; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.25); text-shadow: 1px 1px 1px rgba(0,0,0,0.2); }
+        .basket-label { margin-top: 15px; padding: 6px 15px; border-radius: 20px; color: white; font-size: 16px; font-weight: bold; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
         .label-red { background: #E53935; }
         .label-yellow { background: #F9A825; color: #000; }
         .label-green { background: #388E3C; }
 
-        .basket .fruit { font-size: 40px !important; position: static !important; margin: 3px; z-index: 20; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.15)); }
+        .basket .fruit { font-size: 45px !important; position: static !important; margin: 3px; }
 
         #modal {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 35px; border-radius: 30px; text-align: center;
-            box-shadow: 0 0 60px rgba(0,0,0,0.6); z-index: 3000; width: 85%; max-width: 420px;
+            background: white; padding: 30px; border-radius: 30px; text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); z-index: 3000; width: 85%; max-width: 450px;
         }
-        button { padding: 18px 35px; font-size: 22px; background: #FF9800; color: white; border: none; border-radius: 18px; margin-top: 25px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: background 0.2s; }
-        button:active { background: #E68A00; }
+        button { padding: 15px 35px; font-size: 22px; background: #FF9800; color: white; border: none; border-radius: 15px; margin-top: 20px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -77,7 +74,7 @@
         <div class="basket-wrapper" id="w-yellow"><div class="basket crate yellow" data-color="yellow"><div class="crate-cloth"></div></div><div class="grass"></div><div class="basket-label label-yellow">Сары</div></div>
         <div class="basket-wrapper" id="w-green"><div class="basket crate green" data-color="green"><div class="crate-cloth"></div></div><div class="grass"></div><div class="basket-label label-green">Жасыл</div></div>
     </div>
-    <div id="modal"><h2 id="modal-text"></h2><p id="modal-score-info" style="font-size: 20px; color: #333; margin: 10px 0;"></p><button onclick="nextAction()" id="modal-btn"></button></div>
+    <div id="modal"><h2 id="modal-text"></h2><p id="modal-score-info"></p><button onclick="nextAction()" id="modal-btn"></button></div>
 
     <script>
         let currentLevel = 1, totalScore = 0, levelCorrect = 0, fruitsInLevel = 0;
@@ -88,26 +85,19 @@
             document.querySelectorAll('.basket').forEach(b => { b.querySelectorAll('.fruit').forEach(f => f.remove()); });
             let currentFruits = [];
             const greenW = document.getElementById('w-green');
-            const basketsArea = document.getElementById('basket-area');
+            const area = document.getElementById('basket-area');
 
             if (currentLevel === 1) {
                 fruitsInLevel = 4;
                 currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'});
                 greenW.style.display = 'none';
-                basketsArea.style.justifyContent = 'center'; /* Екі жәшікті ортаға қою */
-                basketsArea.style.gap = '25px'; /* Арасы сәл ашығырақ екі жәшік үшін */
-            } else if (currentLevel === 2) {
-                fruitsInLevel = 6;
-                currentFruits.push({img:'🍎',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'});
-                greenW.style.display = 'flex';
-                basketsArea.style.justifyContent = 'center';
-                basketsArea.style.gap = '15px'; /* Үш жәшік үшін жақын */
+                area.style.maxWidth = "450px"; /* 1-деңгейде жәшіктер ортада жақын тұру үшін */
             } else {
-                fruitsInLevel = 9;
-                currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍋',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'},{img:'🥦',c:'green'});
+                fruitsInLevel = currentLevel === 2 ? 6 : 9;
+                if(currentLevel === 2) currentFruits.push({img:'🍎',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'});
+                else currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍋',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'},{img:'🥦',c:'green'});
                 greenW.style.display = 'flex';
-                basketsArea.style.justifyContent = 'center';
-                basketsArea.style.gap = '15px';
+                area.style.maxWidth = "700px"; /* Жәшіктер арасы ноутбукта да жинақы */
             }
 
             currentFruits.sort(() => Math.random() - 0.5).forEach((f) => {
@@ -121,7 +111,6 @@
 
         function makeDraggable(el) {
             let startX, startY, initialRect;
-            
             el.addEventListener('touchstart', dragStart, {passive: false});
             el.addEventListener('mousedown', dragStart);
 
@@ -156,7 +145,6 @@
                 document.removeEventListener('mousemove', dragging);
                 document.removeEventListener('touchend', dragEnd);
                 document.removeEventListener('mouseup', dragEnd);
-                el.style.zIndex = '';
                 const rect = el.getBoundingClientRect();
                 const cx = rect.left + rect.width / 2;
                 const cy = rect.top + rect.height / 2;
@@ -177,9 +165,10 @@
         function checkWin() {
             if (levelCorrect === fruitsInLevel) {
                 setTimeout(() => {
-                    if (currentLevel === 1) { totalScore += 5; showModal("Өте жақсы!", "5 балл жинадың", "Келесі кезең"); }
-                    else if (currentLevel === 2) { totalScore += 10; showModal("Керемет 👍", "10 балл жинадың", "Келесі кезең"); }
-                    else { totalScore += 15; showModal("Жеңіс! 🤩", "15 балл жинадың!<br>Ойын аяқталды 💕", "Қайта бастау"); }
+                    if (currentLevel === 1) showModal("Жарайсың!", "5 балл", "Келесі кезең");
+                    else if (currentLevel === 2) showModal("Керемет 👍", "10 балл", "Келесі кезең");
+                    else showModal("Жеңіс! 🤩", "15 балл<br>Ойын аяқталды 💕", "Қайта бастау");
+                    totalScore += currentLevel === 1 ? 5 : (currentLevel === 2 ? 10 : 15);
                     document.getElementById('score-num').innerText = totalScore;
                 }, 300);
             }
@@ -197,7 +186,6 @@
             if (currentLevel < 3) currentLevel++; else { currentLevel = 1; totalScore = 0; document.getElementById('score-num').innerText = 0; }
             initLevel();
         }
-
         initLevel();
     </script>
 </body>
