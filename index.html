@@ -3,40 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Жеміс Жәшіктері - Барлық құрылғыға</title>
+    <title>Жеміс Жәшіктері</title>
     <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center;
             background: linear-gradient(180deg, #CEF4FC 0%, #C8E6C9 100%);
-            font-family: 'Comic Sans MS', cursive, sans-serif; height: 100vh; overflow: hidden; touch-action: manipulation;
+            font-family: 'Comic Sans MS', cursive, sans-serif; height: 100vh; overflow: hidden; touch-action: none;
         }
-        .header-info { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.6); }
-        .stat-box { font-size: 18px; font-weight: bold; color: #2C5F2D; }
-        h1 { font-size: 20px; color: #2C5F2D; margin: 10px 0; text-align: center; }
-        #fruit-storage { display: flex; justify-content: center; gap: 10px; height: 100px; margin-top: 10px; width: 100%; }
-        .fruit { font-size: 50px; cursor: grab; transition: transform 0.1s; z-index: 100; touch-action: none; user-select: none; }
-        #basket-area { display: flex; gap: 15px; margin-top: auto; margin-bottom: 20px; padding: 0 10px; }
-        .basket-wrapper { display: flex; flex-direction: column; align-items: center; width: 30%; }
+        .header-info { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.7); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .stat-box { font-size: 16px; font-weight: bold; color: #2C5F2D; }
+        h1 { font-size: 18px; color: #2C5F2D; margin: 10px 5px; text-align: center; text-shadow: 1px 1px white; }
+
+        #fruit-storage { 
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; 
+            width: 90%; min-height: 80px; margin-top: 10px; padding: 10px;
+            background: rgba(255,255,255,0.2); border-radius: 15px;
+        }
+        .fruit { font-size: 45px; cursor: pointer; user-select: none; touch-action: none; display: inline-block; z-index: 100; }
+
+        #basket-area { 
+            display: flex; justify-content: center; align-items: flex-end;
+            gap: 10px; width: 100%; padding: 0 10px; margin-top: auto; margin-bottom: 30px;
+        }
+        .basket-wrapper { display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 120px; }
+        
         .crate {
-            width: 100%; height: 100px; background-color: #D79956; border: 3px solid #A67038;
-            border-radius: 10px; position: relative; display: flex; flex-wrap: wrap;
-            align-content: center; justify-content: center; transition: all 0.3s;
+            width: 100%; height: 80px; background-color: #D79956; border: 3px solid #A67038;
+            border-radius: 8px; position: relative; display: flex; flex-wrap: wrap;
+            align-content: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .crate-cloth { position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; opacity: 0.5; pointer-events: none; }
-        .red .crate-cloth { background-color: #EF5350; }
-        .yellow .crate-cloth { background-color: #FFEE58; }
-        .green .crate-cloth { background-color: #66BB6A; }
-        .basket-label { margin-top: 5px; padding: 2px 8px; border-radius: 10px; color: white; font-size: 12px; font-weight: bold; text-align: center;}
+        .crate-cloth { position: absolute; top: 15%; left: 10%; right: 10%; bottom: 10%; opacity: 0.7; border-radius: 4px; pointer-events: none; }
+        .red .crate-cloth { background: repeating-conic-gradient(#EF5350 0% 25%, #fff 0% 50%) 50% / 15px 15px; }
+        .yellow .crate-cloth { background: repeating-conic-gradient(#FBC02D 0% 25%, #fff 0% 50%) 50% / 15px 15px; }
+        .green .crate-cloth { background: repeating-conic-gradient(#66BB6A 0% 25%, #fff 0% 50%) 50% / 15px 15px; }
+        
+        .basket-label { margin-top: 5px; padding: 3px 8px; border-radius: 10px; color: white; font-size: 11px; font-weight: bold; width: 100%; text-align: center; }
         .label-red { background: #E53935; }
-        .label-yellow { background: #FBC02D; color: #333; }
-        .label-green { background: #4CAF50; }
-        .basket .fruit { font-size: 30px; margin: 2px; }
+        .label-yellow { background: #F9A825; color: #000; }
+        .label-green { background: #388E3C; }
+
+        .basket .fruit { font-size: 25px !important; position: static !important; margin: 1px; }
+
         #modal {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 20px; border-radius: 20px; text-align: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.3); z-index: 1000; width: 80%;
+            background: white; padding: 25px; border-radius: 25px; text-align: center;
+            box-shadow: 0 0 40px rgba(0,0,0,0.4); z-index: 2000; width: 85%;
         }
-        button { padding: 10px 20px; font-size: 18px; background: #FF9800; color: white; border: none; border-radius: 10px; margin-top: 15px; }
+        button { padding: 12px 25px; font-size: 18px; background: #FF9800; color: white; border: none; border-radius: 12px; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -51,7 +65,7 @@
         <div class="basket-wrapper" id="w-yellow"><div class="basket crate yellow" data-color="yellow"><div class="crate-cloth"></div></div><div class="basket-label label-yellow">Сары</div></div>
         <div class="basket-wrapper" id="w-green"><div class="basket crate green" data-color="green"><div class="crate-cloth"></div></div><div class="basket-label label-green">Жасыл</div></div>
     </div>
-    <div id="modal"><h2 id="modal-text"></h2><p id="modal-score-info"></p><button onclick="nextAction()" id="modal-btn"></button></div>
+    <div id="modal"><h2 id="modal-text"></h2><p id="modal-score-info" style="font-size: 18px;"></p><button onclick="nextAction()" id="modal-btn"></button></div>
 
     <script>
         let currentLevel = 1, totalScore = 0, levelCorrect = 0, fruitsInLevel = 0;
@@ -65,7 +79,7 @@
 
             if (currentLevel === 1) {
                 fruitsInLevel = 4;
-                currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍌',c:'yellow'},{img:'🍋',c:'yellow'});
+                currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'});
                 greenW.style.visibility = 'hidden';
             } else if (currentLevel === 2) {
                 fruitsInLevel = 6;
@@ -77,82 +91,94 @@
                 greenW.style.visibility = 'visible';
             }
 
-            currentFruits.sort(() => Math.random() - 0.5).forEach((f, i) => {
+            currentFruits.sort(() => Math.random() - 0.5).forEach((f) => {
                 const div = document.createElement('div');
                 div.className = 'fruit'; div.innerText = f.img; div.dataset.color = f.c;
-                makeDraggable(div);
                 storage.appendChild(div);
+                makeDraggable(div);
             });
             document.getElementById('level-num').innerText = currentLevel;
         }
 
         function makeDraggable(el) {
-            let startX, startY, initialX, initialY;
+            let startX, startY, initialRect;
             
-            // ТЫШҚАНМЕН (Компьютер)
-            el.onmousedown = dragMouseDown;
-            // САУСАҚПЕН (Телефон)
-            el.ontouchstart = dragMouseDown;
+            el.addEventListener('touchstart', dragStart, {passive: false});
+            el.addEventListener('mousedown', dragStart);
 
-            function dragMouseDown(e) {
+            function dragStart(e) {
                 e.preventDefault();
-                let clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-                let clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-                initialX = el.offsetLeft; initialY = el.offsetTop;
-                startX = clientX; startY = clientY;
-                document.onmouseup = closeDragElement; document.ontouchend = closeDragElement;
-                document.onmousemove = elementDrag; document.ontouchmove = elementDrag;
-                el.style.position = 'absolute'; el.style.zIndex = 1000;
-            }
-
-            function elementDrag(e) {
-                let clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-                let clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-                el.style.left = (el.offsetLeft - (startX - clientX)) + "px";
-                el.style.top = (el.offsetTop - (startY - clientY)) + "px";
-                startX = clientX; startY = clientY;
-            }
-
-            function closeDragElement(e) {
-                document.onmouseup = null; document.ontouchend = null;
-                document.onmousemove = null; document.ontouchmove = null;
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
                 
-                const baskets = document.querySelectorAll('.basket');
-                let dropped = false;
-                const rect = el.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
+                initialRect = el.getBoundingClientRect();
+                startX = clientX; startY = clientY;
+                
+                el.style.position = 'fixed';
+                el.style.left = initialRect.left + 'px';
+                el.style.top = initialRect.top + 'px';
+                el.style.width = initialRect.width + 'px';
+                el.style.height = initialRect.height + 'px';
 
-                baskets.forEach(b => {
+                document.addEventListener('touchmove', dragging, {passive: false});
+                document.addEventListener('mousemove', dragging);
+                document.addEventListener('touchend', dragEnd);
+                document.addEventListener('mouseup', dragEnd);
+            }
+
+            function dragging(e) {
+                e.preventDefault();
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                el.style.left = (initialRect.left + (clientX - startX)) + 'px';
+                el.style.top = (initialRect.top + (clientY - startY)) + 'px';
+            }
+
+            function dragEnd(e) {
+                document.removeEventListener('touchmove', dragging);
+                document.removeEventListener('mousemove', dragging);
+                document.removeEventListener('touchend', dragEnd);
+                document.removeEventListener('mouseup', dragEnd);
+
+                const rect = el.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                
+                let found = false;
+                document.querySelectorAll('.basket').forEach(b => {
                     const bRect = b.getBoundingClientRect();
-                    if (centerX > bRect.left && centerX < bRect.right && centerY > bRect.top && centerY < bRect.bottom) {
+                    if (cx > bRect.left && cx < bRect.right && cy > bRect.top && cy < bRect.bottom) {
                         if (el.dataset.color === b.dataset.color) {
-                            b.appendChild(el); el.style.position = 'static'; el.style.fontSize = '30px';
-                            el.onmousedown = null; el.ontouchstart = null;
-                            levelCorrect++; dropped = true; checkWin();
+                            el.style.position = 'static';
+                            b.appendChild(el);
+                            levelCorrect++; found = true;
+                            checkWin();
                         }
                     }
                 });
 
-                if (!dropped) {
-                    el.style.position = 'static'; el.style.left = ''; el.style.top = '';
+                if (!found) {
+                    el.style.position = 'static';
+                    el.style.width = ''; el.style.height = '';
                 }
             }
         }
 
         function checkWin() {
             if (levelCorrect === fruitsInLevel) {
-                if (currentLevel === 1) { totalScore += 5; showModal("Өте жақсы орындау!", "5 балл", "2-кезеңге өту"); }
-                else if (currentLevel === 2) { totalScore += 10; showModal("Тамаша 👍", "10 балл", "3-кезеңге өту"); }
-                else { totalScore += 15; showModal("Жарайсың, балақай🤩", "15 балл<br>Барлық балды жинадың! 💕"); document.getElementById('modal-btn').innerText = "Қайта бастау"; }
-                document.getElementById('score-num').innerText = totalScore;
+                setTimeout(() => {
+                    if (currentLevel === 1) { totalScore += 5; showModal("Өте жақсы!", "5 балл жинадың", "2-кезең"); }
+                    else if (currentLevel === 2) { totalScore += 10; showModal("Тамаша 👍", "10 балл жинадың", "3-кезең"); }
+                    else { totalScore += 15; showModal("Жарайсың! 🤩", "15 балл жинадың!<br>Бәрін бітірдің! 💕", "Қайта бастау"); }
+                    document.getElementById('score-num').innerText = totalScore;
+                }, 300);
             }
         }
 
         function showModal(t, s, b) {
             document.getElementById('modal-text').innerText = t;
             document.getElementById('modal-score-info').innerHTML = s;
-            document.getElementById('modal-btn').innerText = b || "Жалғастыру";
+            document.getElementById('modal-btn').innerText = b;
             modal.style.display = 'block';
         }
 
