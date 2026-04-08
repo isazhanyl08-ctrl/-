@@ -2,289 +2,164 @@
 <html lang="kk">
 <head>
     <meta charset="UTF-8">
-    <title>Жеміс Жәшіктері - 3 Кезең</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Жеміс Жәшіктері - Барлық құрылғыға</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center;
             background: linear-gradient(180deg, #CEF4FC 0%, #C8E6C9 100%);
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            user-select: none;
+            font-family: 'Comic Sans MS', cursive, sans-serif; height: 100vh; overflow: hidden; touch-action: manipulation;
         }
-
-        .header-info {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-
-        .stat-box { font-size: 24px; font-weight: bold; color: #2C5F2D; }
-
-        h1 { color: #2C5F2D; margin: 10px 0; text-shadow: 1px 1px #fff; }
-
-        #fruit-storage {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            height: 120px;
-            margin-top: 20px;
-            min-width: 400px;
-        }
-
-        .fruit {
-            font-size: 65px;
-            cursor: grab;
-            transition: transform 0.2s;
-            z-index: 100;
-        }
-
-        /* ЖӘШІКТЕР ДИЗАЙНЫ (Сіз жіберген сурет негізінде) */
-        #basket-area {
-            display: flex;
-            gap: 30px;
-            margin-top: auto;
-            margin-bottom: 30px;
-        }
-
-        .basket-wrapper { display: flex; flex-direction: column; align-items: center; }
-
+        .header-info { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.6); }
+        .stat-box { font-size: 18px; font-weight: bold; color: #2C5F2D; }
+        h1 { font-size: 20px; color: #2C5F2D; margin: 10px 0; text-align: center; }
+        #fruit-storage { display: flex; justify-content: center; gap: 10px; height: 100px; margin-top: 10px; width: 100%; }
+        .fruit { font-size: 50px; cursor: grab; transition: transform 0.1s; z-index: 100; touch-action: none; user-select: none; }
+        #basket-area { display: flex; gap: 15px; margin-top: auto; margin-bottom: 20px; padding: 0 10px; }
+        .basket-wrapper { display: flex; flex-direction: column; align-items: center; width: 30%; }
         .crate {
-            width: 200px;
-            height: 130px;
-            background-color: #D79956;
-            border: 4px solid #A67038;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-            display: flex;
-            flex-wrap: wrap;
-            align-content: center;
-            justify-content: center;
-            padding: 10px;
-            transition: all 0.3s;
+            width: 100%; height: 100px; background-color: #D79956; border: 3px solid #A67038;
+            border-radius: 10px; position: relative; display: flex; flex-wrap: wrap;
+            align-content: center; justify-content: center; transition: all 0.3s;
         }
-
-        /* Арқандар мен шөп */
-        .crate::before, .crate::after {
-            content: ''; position: absolute; width: 18px; height: 18px;
-            background-color: #E3C58D; border: 2px solid #C19A6B;
-            border-radius: 50%; top: -8px;
-        }
-        .crate::before { left: 10px; }
-        .crate::after { right: 10px; }
-
-        .crate-cloth {
-            position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border-radius: 5px; opacity: 0.6; pointer-events: none;
-        }
+        .crate-cloth { position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; opacity: 0.5; pointer-events: none; }
         .red .crate-cloth { background-color: #EF5350; }
         .yellow .crate-cloth { background-color: #FFEE58; }
         .green .crate-cloth { background-color: #66BB6A; }
-
-        .crate-grass {
-            position: absolute; bottom: -12px; left: -5px; right: -5px;
-            height: 30px; background-color: #4CAF50; border-radius: 40% 40% 0 0;
-            z-index: -1;
-        }
-
-        .basket.hovered { transform: scale(1.08); background-color: #EAC090; }
-
-        .basket-label {
-            margin-top: 15px; padding: 5px 15px; border-radius: 15px;
-            font-weight: bold; color: white; font-size: 18px;
-        }
+        .basket-label { margin-top: 5px; padding: 2px 8px; border-radius: 10px; color: white; font-size: 12px; font-weight: bold; text-align: center;}
         .label-red { background: #E53935; }
         .label-yellow { background: #FBC02D; color: #333; }
         .label-green { background: #4CAF50; }
-
-        .basket .fruit { font-size: 40px; cursor: default; }
-
-        /* МОДАЛЬДІ ТЕРЕЗЕ */
+        .basket .fruit { font-size: 30px; margin: 2px; }
         #modal {
-            display: none; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); background: white;
-            padding: 40px; border-radius: 30px; text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,0.3); z-index: 1000; width: 420px;
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 20px; border-radius: 20px; text-align: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3); z-index: 1000; width: 80%;
         }
-
-        button {
-            padding: 15px 30px; font-size: 20px; background: #FF9800;
-            color: white; border: none; border-radius: 15px; cursor: pointer;
-            font-family: inherit; margin-top: 20px;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
+        button { padding: 10px 20px; font-size: 18px; background: #FF9800; color: white; border: none; border-radius: 10px; margin-top: 15px; }
     </style>
 </head>
 <body>
-
     <div class="header-info">
-        <div class="stat-box">Деңгей: <span id="level-num">1</span>/3</div>
+        <div class="stat-box">Деңгей: <span id="level-num">1</span></div>
         <div class="stat-box">Ұпай: <span id="score-num">0</span></div>
     </div>
-
-    <h1>Жемістерді түстерімен орналастыр</h1>
-
+    <h1>Жемістерді сәйкестендір</h1>
     <div id="fruit-storage"></div>
-
     <div id="basket-area">
-        <div class="basket-wrapper" id="w-red">
-            <div class="basket red crate" data-color="red"><div class="crate-cloth"></div><div class="crate-grass"></div></div>
-            <div class="basket-label label-red">Қызыл жәшік</div>
-        </div>
-        <div class="basket-wrapper" id="w-yellow">
-            <div class="basket yellow crate" data-color="yellow"><div class="crate-cloth"></div><div class="crate-grass"></div></div>
-            <div class="basket-label label-yellow">Сары жәшік</div>
-        </div>
-        <div class="basket-wrapper" id="w-green">
-            <div class="basket green crate" data-color="green"><div class="crate-cloth"></div><div class="crate-grass"></div></div>
-            <div class="basket-label label-green">Жасыл жәшік</div>
-        </div>
+        <div class="basket-wrapper" id="w-red"><div class="basket crate red" data-color="red"><div class="crate-cloth"></div></div><div class="basket-label label-red">Қызыл</div></div>
+        <div class="basket-wrapper" id="w-yellow"><div class="basket crate yellow" data-color="yellow"><div class="crate-cloth"></div></div><div class="basket-label label-yellow">Сары</div></div>
+        <div class="basket-wrapper" id="w-green"><div class="basket crate green" data-color="green"><div class="crate-cloth"></div></div><div class="basket-label label-green">Жасыл</div></div>
     </div>
-
-    <div id="modal">
-        <h2 id="modal-text"></h2>
-        <p id="modal-score-info" style="font-size: 20px;"></p>
-        <button id="modal-btn" onclick="nextAction()"></button>
-    </div>
+    <div id="modal"><h2 id="modal-text"></h2><p id="modal-score-info"></p><button onclick="nextAction()" id="modal-btn"></button></div>
 
     <script>
-        let currentLevel = 1;
-        let totalScore = 0;
-        let levelCorrect = 0;
-        let fruitsInLevel = 0;
-
-        const storage = document.getElementById('fruit-storage');
-        const modal = document.getElementById('modal');
-        const modalText = document.getElementById('modal-text');
-        const modalBtn = document.getElementById('modal-btn');
-
-        function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+        let currentLevel = 1, totalScore = 0, levelCorrect = 0, fruitsInLevel = 0;
+        const storage = document.getElementById('fruit-storage'), modal = document.getElementById('modal');
 
         function initLevel() {
-            storage.innerHTML = '';
-            levelCorrect = 0;
-            document.querySelectorAll('.basket').forEach(b => {
-                b.querySelectorAll('.fruit').forEach(f => f.remove());
-                b.classList.remove('hovered');
-            });
-            
+            storage.innerHTML = ''; levelCorrect = 0;
+            document.querySelectorAll('.basket').forEach(b => { b.querySelectorAll('.fruit').forEach(f => f.remove()); });
             let currentFruits = [];
-            const redW = document.getElementById('w-red');
-            const yellowW = document.getElementById('w-yellow');
             const greenW = document.getElementById('w-green');
 
             if (currentLevel === 1) {
-                // 1-КЕЗЕҢ: 2 ТҮС (Қызыл, Сары) × 2 жеміс = 4
                 fruitsInLevel = 4;
-                currentFruits.push({img: '🍎', color: 'red'}, {img: '🍓', color: 'red'});
-                currentFruits.push({img: '🍌', color: 'yellow'}, {img: '🍋', color: 'yellow'});
-                greenW.style.display = 'none'; // Жасыл жәшікті жасыру
+                currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍌',c:'yellow'},{img:'🍋',c:'yellow'});
+                greenW.style.visibility = 'hidden';
             } else if (currentLevel === 2) {
-                // 2-КЕЗЕҢ: 3 ТҮС × 2 жеміс = 6
                 fruitsInLevel = 6;
-                currentFruits.push({img: '🍎', color: 'red'}, {img: '🍒', color: 'red'});
-                currentFruits.push({img: '🍌', color: 'yellow'}, {img: '🍍', color: 'yellow'});
-                currentFruits.push({img: '🍏', color: 'green'}, {img: '🥝', color: 'green'});
-                greenW.style.display = 'flex'; // Жасыл жәшікті көрсету
-            } else if (currentLevel === 3) {
-                // 3-КЕЗЕҢ: 3 ТҮС × 3 жеміс = 9
+                currentFruits.push({img:'🍎',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'});
+                greenW.style.visibility = 'visible';
+            } else {
                 fruitsInLevel = 9;
-                currentFruits.push({img: '🍎', color: 'red'}, {img: '🍓', color: 'red'}, {img: '🍒', color: 'red'});
-                currentFruits.push({img: '🍌', color: 'yellow'}, {img: '🍍', color: 'yellow'}, {img: '🍋', color: 'yellow'});
-                currentFruits.push({img: '🍏', color: 'green'}, {img: '🥝', color: 'green'}, {img: '🥦', color: 'green'});
-                greenW.style.display = 'flex';
+                currentFruits.push({img:'🍎',c:'red'},{img:'🍓',c:'red'},{img:'🍒',c:'red'},{img:'🍌',c:'yellow'},{img:'🍍',c:'yellow'},{img:'🍋',c:'yellow'},{img:'🍏',c:'green'},{img:'🥝',c:'green'},{img:'🥦',c:'green'});
+                greenW.style.visibility = 'visible';
             }
 
-            shuffle(currentFruits).forEach((f, index) => {
+            currentFruits.sort(() => Math.random() - 0.5).forEach((f, i) => {
                 const div = document.createElement('div');
-                div.className = 'fruit';
-                div.id = 'f-' + index + '-' + Math.random();
-                div.draggable = true;
-                div.innerText = f.img;
-                div.dataset.color = f.color;
-                div.addEventListener('dragstart', (e) => {
-                    e.dataTransfer.setData("text", e.target.id);
-                    setTimeout(() => e.target.style.opacity = '0.5', 0);
-                });
-                div.addEventListener('dragend', (e) => e.target.style.opacity = '1');
+                div.className = 'fruit'; div.innerText = f.img; div.dataset.color = f.c;
+                makeDraggable(div);
                 storage.appendChild(div);
             });
-
             document.getElementById('level-num').innerText = currentLevel;
         }
 
-        document.querySelectorAll('.basket').forEach(basket => {
-            basket.addEventListener('dragover', (e) => e.preventDefault());
-            basket.addEventListener('dragenter', function(e) { e.preventDefault(); this.classList.add('hovered'); });
-            basket.addEventListener('dragleave', function() { this.classList.remove('hovered'); });
-            basket.ondrop = function(e) {
-                e.preventDefault();
-                this.classList.remove('hovered');
-                const id = e.dataTransfer.getData("text");
-                const el = document.getElementById(id);
-                if(!el) return;
-                
-                if (el.dataset.color === this.dataset.color) {
-                    this.appendChild(el);
-                    el.draggable = false;
-                    levelCorrect++;
-                    checkLevelComplete();
-                } else {
-                    el.style.animation = 'shake 0.3s';
-                    setTimeout(() => el.style.animation = '', 300);
-                }
-            };
-        });
+        function makeDraggable(el) {
+            let startX, startY, initialX, initialY;
+            
+            // ТЫШҚАНМЕН (Компьютер)
+            el.onmousedown = dragMouseDown;
+            // САУСАҚПЕН (Телефон)
+            el.ontouchstart = dragMouseDown;
 
-        function checkLevelComplete() {
-            if (levelCorrect === fruitsInLevel) {
-                if (currentLevel === 1) {
-                    totalScore += 5;
-                    showModal("Өте жақсы, жалғастырамыз", "5 балл жинадың!", "Екінші кезеңге өту");
-                } else if (currentLevel === 2) {
-                    totalScore += 10;
-                    showModal("Тамаша 👍", "10 балл жинадың!", "Келесі кезеңге өту");
-                } else if (currentLevel === 3) {
-                    totalScore += 15;
-                    showModal("Жарайсың, балақай 🤩", "15 балл жинадың!<br><br><b>Барлық балды жинадың, сенімен мақтанамын 💕</b>", "Қайта бастау 🔄");
+            function dragMouseDown(e) {
+                e.preventDefault();
+                let clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                let clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+                initialX = el.offsetLeft; initialY = el.offsetTop;
+                startX = clientX; startY = clientY;
+                document.onmouseup = closeDragElement; document.ontouchend = closeDragElement;
+                document.onmousemove = elementDrag; document.ontouchmove = elementDrag;
+                el.style.position = 'absolute'; el.style.zIndex = 1000;
+            }
+
+            function elementDrag(e) {
+                let clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                let clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                el.style.left = (el.offsetLeft - (startX - clientX)) + "px";
+                el.style.top = (el.offsetTop - (startY - clientY)) + "px";
+                startX = clientX; startY = clientY;
+            }
+
+            function closeDragElement(e) {
+                document.onmouseup = null; document.ontouchend = null;
+                document.onmousemove = null; document.ontouchmove = null;
+                
+                const baskets = document.querySelectorAll('.basket');
+                let dropped = false;
+                const rect = el.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                baskets.forEach(b => {
+                    const bRect = b.getBoundingClientRect();
+                    if (centerX > bRect.left && centerX < bRect.right && centerY > bRect.top && centerY < bRect.bottom) {
+                        if (el.dataset.color === b.dataset.color) {
+                            b.appendChild(el); el.style.position = 'static'; el.style.fontSize = '30px';
+                            el.onmousedown = null; el.ontouchstart = null;
+                            levelCorrect++; dropped = true; checkWin();
+                        }
+                    }
+                });
+
+                if (!dropped) {
+                    el.style.position = 'static'; el.style.left = ''; el.style.top = '';
                 }
+            }
+        }
+
+        function checkWin() {
+            if (levelCorrect === fruitsInLevel) {
+                if (currentLevel === 1) { totalScore += 5; showModal("Өте жақсы орындау!", "5 балл", "2-кезеңге өту"); }
+                else if (currentLevel === 2) { totalScore += 10; showModal("Тамаша 👍", "10 балл", "3-кезеңге өту"); }
+                else { totalScore += 15; showModal("Жарайсың, балақай🤩", "15 балл<br>Барлық балды жинадың! 💕"); document.getElementById('modal-btn').innerText = "Қайта бастау"; }
                 document.getElementById('score-num').innerText = totalScore;
             }
         }
 
-        function showModal(text, scoreText, btnText) {
-            modalText.innerText = text;
-            document.getElementById('modal-score-info').innerHTML = scoreText;
-            modalBtn.innerText = btnText;
-            setTimeout(() => { modal.style.display = 'block'; }, 500);
+        function showModal(t, s, b) {
+            document.getElementById('modal-text').innerText = t;
+            document.getElementById('modal-score-info').innerHTML = s;
+            document.getElementById('modal-btn').innerText = b || "Жалғастыру";
+            modal.style.display = 'block';
         }
 
         function nextAction() {
             modal.style.display = 'none';
-            if (currentLevel < 3) {
-                currentLevel++;
-                initLevel();
-            } else {
-                currentLevel = 1;
-                totalScore = 0;
-                document.getElementById('score-num').innerText = 0;
-                initLevel();
-            }
+            if (currentLevel < 3) currentLevel++; else { currentLevel = 1; totalScore = 0; document.getElementById('score-num').innerText = 0; }
+            initLevel();
         }
 
         initLevel();
